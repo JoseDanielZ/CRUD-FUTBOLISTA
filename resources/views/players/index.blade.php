@@ -6,6 +6,16 @@
     <h2>Jugadores de La Liga</h2>
     <a class="btn" href="{{ route('players.create') }}">Nuevo jugador</a>
 
+    <form method="GET" action="{{ route('players.index') }}" style="margin-top: 16px;">
+        <label for="team_id">Filtrar por equipo:</label>
+        <select name="team_id" id="team_id" onchange="this.form.submit()">
+            <option value="">Todos los equipos</option>
+            @foreach($teams as $team)
+                <option value="{{ $team->id }}" @selected((string) $selectedTeamId === (string) $team->id)>{{ $team->name }}</option>
+            @endforeach
+        </select>
+    </form>
+
     <table>
         <tr>
             <th>Foto</th>
