@@ -22,8 +22,8 @@ class ImportPlayers extends Command
                 ['external_id' => $t['idTeam']],
                 [
                     'name' => $t['strTeam'],
-                    'badge' => $t['strTeamBadge'],
-                    'description' => $t['strDescriptionES'] ?? $t['strDescriptionEN'],
+                    'badge' => $t['strTeamBadge'] ?? $t['strBadge'] ?? null,
+                    'description' => $t['strDescriptionES'] ?? $t['strDescriptionEN'] ?? null,
                 ]
             );
 
@@ -35,9 +35,9 @@ class ImportPlayers extends Command
                     [
                         'team_id' => $team->id,
                         'name' => $p['strPlayer'],
-                        'position' => $p['strPosition'],
-                        'nationality' => $p['strNationality'],
-                        'photo' => $p['strCutout'] ?? $p['strThumb'],
+                        'position' => $p['strPosition'] ?? null,
+                        'nationality' => $p['strNationality'] ?? null,
+                        'photo' => $p['strCutout'] ?? $p['strThumb'] ?? null,
                     ]
                 );
             }

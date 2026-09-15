@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Player;
 use App\Models\Team;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PlayerController extends Controller
 {
@@ -22,13 +23,16 @@ class PlayerController extends Controller
 
     public function store(Request $request)
     {
-        Player::create($request->validate([
+        $data = $request->validate([
             'name' => 'required',
             'position' => 'nullable',
             'nationality' => 'nullable',
             'photo' => 'nullable',
             'team_id' => 'required|exists:teams,id',
-        ]));
+        ]);
+        $data['external_id'] = 'manual-' . Str::uuid();
+
+        Player::create($data);
         return redirect()->route('players.index');
     }
 
