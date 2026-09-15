@@ -9,10 +9,16 @@ use Illuminate\Support\Str;
 
 class PlayerController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $players = Player::with('team')->get();
-        return view('players.index', compact('players'));
+        $teams = Team::all();
+        $selectedTeamId = $request->query('team_id');
+
+        $players = Player::with('team')
+            ->when($selectedTeamId, fn ($query) => $query->where('team_id', $selectedTeamId))
+            ->get();
+
+        return view('players.index', compact('players', 'teams', 'selectedTeamId'));
     }
 
     public function create()
